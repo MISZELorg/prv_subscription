@@ -13,7 +13,3 @@ terraform {
 	  	key = "tfstate"
     }
 }
-
-provider "azurerm" {
-  features {}
-}
