@@ -31,7 +31,7 @@ jobs:
     name: 'Plan'
     runs-on: ubuntu-latest
     environment: production
-    needs: initialize
+    needs: setup
     env:
       ARM_CLIENT_SECRET: ${{ secrets.IACKEY }}
       ARM_CLIENT_ID: ${{ secrets.IACID }}
