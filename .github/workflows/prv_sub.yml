@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  setup:
-    name: 'Setup'
+  terraform:
+    name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
     env:
@@ -17,28 +17,15 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.PRVSUBID }}
       ARM_TENANT_ID: ${{ secrets.TENANTID }}
 
-    # # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    # defaults:
-    #   run:
-    #     shell: bash
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
 
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
-
-  plan:
-    name: 'Plan'
-    runs-on: ubuntu-latest
-    environment: production
-    needs: setup
-    env:
-      ARM_CLIENT_SECRET: ${{ secrets.IACKEY }}
-      ARM_CLIENT_ID: ${{ secrets.IACID }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.PRVSUBID }}
-      ARM_TENANT_ID: ${{ secrets.TENANTID }}
-    
-    steps:
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
@@ -47,22 +34,11 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
+
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -out tfplan
 
-  apply:
-    name: 'Apply'
-    runs-on: ubuntu-latest
-    environment: production
-    needs: plan
-    env:
-      ARM_CLIENT_SECRET: ${{ secrets.IACKEY }}
-      ARM_CLIENT_ID: ${{ secrets.IACID }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.PRVSUBID }}
-      ARM_TENANT_ID: ${{ secrets.TENANTID }}
-
-    steps:
     # On push to "main", build or change infrastructure according to Terraform configuration files
     - name: Terraform Apply
       run: terraform apply "tfplan"
