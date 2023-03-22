@@ -39,6 +39,18 @@ jobs:
     - name: Terraform Plan
       run: terraform plan -out tfplan
 
+  apply:
+    name: 'Apply'
+    runs-on: ubuntu-latest
+    environment: production
+    needs: terraform
+    env:
+      ARM_CLIENT_SECRET: ${{ secrets.IACKEY }}
+      ARM_CLIENT_ID: ${{ secrets.IACID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.PRVSUBID }}
+      ARM_TENANT_ID: ${{ secrets.TENANTID }}
+
+    steps:
     # On push to "main", build or change infrastructure according to Terraform configuration files
     - name: Terraform Apply
       run: terraform apply "tfplan"
