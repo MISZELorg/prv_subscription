@@ -16,6 +16,22 @@ env:
 
 jobs:
 
+  checkov:
+    name: checkov
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Test with Checkov
+        id: checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: example/examplea
+          framework: terraform
+
   # tests:
   #   name: 'Tests'
   #   runs-on: ubuntu-latest
@@ -84,21 +100,6 @@ jobs:
     - name: Terraform Init
       run: terraform init
     
-    #checkov
-    - name: checkov
-      run: |
-        sudo apt update
-        sudo apt install software-properties-common
-        sudo add-apt-repository ppa:deadsnakes/ppa
-        sudo apt install python3.7
-        sudo apt install python3-pip
-        sudo python3.7 -m pip install -U checkov #to install or upgrade checkov)
-        source <(register-python-argcomplete checkov)
-        terraform init
-        terraform plan -out tf.plan
-        terraform show -json tf.plan  > tf.json 
-        checkov -f tf.json
-
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: tf-plan
