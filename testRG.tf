@@ -3,10 +3,10 @@ resource "azurerm_resource_group" "testRG123" {
   location = var.location
 }
 
-# resource "azurerm_resource_group" "testRG2" {
-#   name     = "testRG2"
-#   location = var.location
-# }
+resource "azurerm_resource_group" "testRG456" {
+  name     = "testRG456"
+  location = var.location
+}
 
 # resource "azurerm_resource_group" "testRG3" {
 #   name     = "testRG3"
