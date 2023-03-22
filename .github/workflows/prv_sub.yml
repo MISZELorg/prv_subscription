@@ -8,8 +8,8 @@ on:
 
 jobs:
 
-  terraform-unit-tests:
-    name: 'Terraform Unit Tests'
+  tests:
+    name: 'Tests'
     runs-on: ubuntu-latest
     
     steps:
@@ -52,6 +52,7 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
+    needs: tests
     env:
       ARM_CLIENT_SECRET: ${{ secrets.IACKEY }}
       ARM_CLIENT_ID: ${{ secrets.IACID }}
