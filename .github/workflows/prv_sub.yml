@@ -16,27 +16,11 @@ env:
 
 jobs:
 
-  checkov:
-    name: checkov
+  tests:
+    name: 'Tests'
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.8
-      - name: Test with Checkov
-        id: checkov
-        uses: bridgecrewio/checkov-action@master
-        with:
-          directory: example/examplea
-          framework: terraform
-
-  # tests:
-  #   name: 'Tests'
-  #   runs-on: ubuntu-latest
     
-  #   steps:
+    steps:
   #   # Checkout the repository to the GitHub Actions runner
   #   - name: Checkout
   #     uses: actions/checkout@v3
@@ -57,12 +41,12 @@ jobs:
   #   # - name: Terraform Format
   #   #   run: terraform fmt -check -recursive
     
-  #   # Perform a security scan of the terraform code using checkov
-  #   - name: Run Checkov action
-  #     id: checkov
-  #     uses: bridgecrewio/checkov-action@master
-  #     with: 
-  #       framework: terraform
+    # Perform a security scan of the terraform code using checkov
+    - name: Run Checkov action
+      id: checkov
+      uses: bridgecrewio/checkov-action@master
+      with: 
+        framework: terraform
 
   #   # Upload results to GitHub Advanced Security
   #   - name: Upload SARIF file
