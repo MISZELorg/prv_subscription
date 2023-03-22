@@ -6,6 +6,12 @@ on:
     - main
   pull_request:
 
+env:
+  ARM_CLIENT_SECRET: ${{ secrets.IACKEY }}
+  ARM_CLIENT_ID: ${{ secrets.IACID }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.PRVSUBID }}
+  ARM_TENANT_ID: ${{ secrets.TENANTID }}
+
 jobs:
 
   tests:
@@ -53,11 +59,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     needs: tests
-    env:
-      ARM_CLIENT_SECRET: ${{ secrets.IACKEY }}
-      ARM_CLIENT_ID: ${{ secrets.IACID }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.PRVSUBID }}
-      ARM_TENANT_ID: ${{ secrets.TENANTID }}
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
