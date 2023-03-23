@@ -13,6 +13,7 @@ on:
 
 #These environment variables are used by the terraform azure provider to setup OIDD authenticate. 
 env:
+  ARM_CLIENT_SECRET: "${{ secrets.IACKEY }}"
   ARM_CLIENT_ID: "${{ secrets.IACID }}"
   ARM_SUBSCRIPTION_ID: "${{ secrets.PRVSUBID }}"
   ARM_TENANT_ID: "${{ secrets.TENANTID }}"
